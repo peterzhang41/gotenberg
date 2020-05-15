@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+    name: "gotenbergcluster"
+    labels:
+        app: "gotenbergcluster"
+spec:
+    type: LoadBalancer
+    ports:
+    - port: 3000
+      targetPort: http
+      protocol: TCP
+      name: http
+    selector:
+        app: "gotenbergcluster"

@@ -30,6 +30,9 @@ const (
 	// WaitDelayArgKey is the key
 	// of the argument "waitDelay".
 	WaitDelayArgKey ArgKey = "waitDelay"
+	// WaitJSRenderStatusArgKey is the key
+	// of the argument "waitJSRenderStatus".
+	WaitJSRenderStatusArgKey ArgKey = "waitJSRenderStatus"
 	// PaperWidthArgKey is the key
 	// of the argument "paperWidth".
 	PaperWidthArgKey ArgKey = "paperWidth"
@@ -75,6 +78,7 @@ func ArgKeys() []ArgKey {
 		WebhookURLTimeoutArgKey,
 		RemoteURLArgKey,
 		WaitDelayArgKey,
+		WaitJSRenderStatusArgKey,
 		PaperWidthArgKey,
 		PaperHeightArgKey,
 		MarginTopArgKey,
@@ -126,6 +130,28 @@ func WaitDelayArg(r Resource, config conf.Config) (float64, error) {
 		defaultWaitDelay,
 		xassert.Float64NotInferiorTo(0.0),
 		xassert.Float64NotSuperiorTo(config.MaximumWaitDelay()),
+	)
+	if err != nil {
+		return result, xerror.New(op, err)
+	}
+	return result, nil
+}
+
+/*
+WaitJSRenderStatusArg is a helper for retrieving
+the "waitJSRenderStatus" argument as string.
+
+It also validates it against the application
+configuration.
+*/
+func WaitJSRenderStatusArg(r Resource, config conf.Config) (string, error) {
+	const (
+		op                        string = "resource.WaitJSRenderStatusArg"
+		defaultWaitJSRenderStatus string = ""
+	)
+	result, err := r.StringArg(
+		WaitJSRenderStatusArgKey,
+		defaultWaitJSRenderStatus,
 	)
 	if err != nil {
 		return result, xerror.New(op, err)
